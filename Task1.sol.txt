@@ -1,0 +1,43 @@
+pragma solidity ^0.5.0;
+contract classEnrol{
+    
+enum Gender{
+    Male,
+    Female
+}
+
+enum DegreeStatus{
+    BSCpassed,
+    BSCNotPassed
+}
+
+
+struct Student {
+    address myAddress;
+    string Name;
+    string RollNo;
+    DegreeStatus degreeStatus;
+    Gender gender;
+    
+}
+    
+mapping (address => Student) studentRecords;
+mapping (string => string) registrationStatus;
+
+Student StudentStatus;
+uint count;
+
+function setStatus(address payable add, string memory Name, string memory RollNo, uint degreeStatus, uint gender) public {
+StudentStatus = Student(add, Name, RollNo, DegreeStatus(degreeStatus), Gender(gender));
+count++;
+studentRecords[add] = StudentStatus;
+registrationStatus["RollNo"] = "Registered fee not paid";
+}
+
+function pay(uint j, string memory RollNo) public payable{
+    if(j >= 2000000000000000000){registrationStatus["RollNo"] = "Confirmed";}
+}
+function findStatus(string memory RollNo) public view returns (string memory){
+    return registrationStatus["RollNo"];
+}
+
